@@ -1,0 +1,24 @@
+@startuml
+!include skin.iuml
+autonumber
+hide footbox
+actor "Test Engineer" as TE
+participant ":CommandLineInterface" as CLI <<boundary>>
+participant ":ErrorReportView" as EV <<boundary>>
+participant ":ErrorReport" as ER <<entity>>
+participant ":ValidationError" as VE <<entity>>
+TE -> CLI : show error report([report file])
+CLI -> EV : display
+EV -> ER : get entries
+loop for each ValidationError
+  ER -> VE : get line, id, text, reason, expected pattern, hint
+  VE --> ER : entry
+end
+ER --> EV : entries ordered by line number
+EV --> TE : error report table
+opt report file path given
+  EV -> ER : save(path)
+  ER --> EV : saved
+  EV --> TE : "Report saved to report.txt"
+end
+@enduml

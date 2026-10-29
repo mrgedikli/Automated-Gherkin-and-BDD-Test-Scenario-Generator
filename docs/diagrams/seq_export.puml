@@ -1,0 +1,38 @@
+@startuml
+!include skin.iuml
+autonumber
+hide footbox
+actor "Test Engineer" as TE
+participant ":CommandLineInterface" as CLI <<boundary>>
+participant ":ExportControl" as EC <<control>>
+participant ":Feature" as F <<entity>>
+participant ":OutputFile" as OF <<entity>>
+TE -> CLI : export([outputFormat], directory)
+CLI -> EC : export features
+opt no output format selected
+  EC -> EC : outputFormat = GHERKIN
+end
+opt directory does not exist
+  EC -> EC : create directory
+end
+loop for each Feature
+  EC -> F : get title, Background, Scenarios
+  F --> EC : content
+  opt target file already exists
+    EC -> CLI : ask overwrite confirmation
+    CLI -> TE : "Overwrite user_login.feature? (y/n)"
+    TE --> CLI : answer
+    CLI --> EC : answer
+  end
+  opt not refused
+    create OF
+    EC -> OF : write(path, format)
+    opt write fails
+      OF --> EC : error
+      EC -> CLI : report path and cause
+    end
+  end
+end
+EC --> CLI : list of written files
+CLI --> TE : export summary
+@enduml

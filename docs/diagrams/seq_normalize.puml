@@ -1,0 +1,41 @@
+@startuml
+!include skin.iuml
+autonumber
+hide footbox
+actor "Test Engineer" as TE
+participant ":CommandLineInterface" as CLI <<boundary>>
+participant ":ValidationControl" as VC <<control>>
+participant ":NormalizationControl" as NC <<control>>
+participant ":FreeTextRequirement" as FT <<entity>>
+participant ":LlmServiceGateway" as GW <<boundary>>
+actor "LLM Service" as LLM <<system>>
+VC -> NC : normalize(free-text requirement)
+NC -> FT : get text
+NC -> GW : request EARS rewrite(text)
+GW -> LLM : prompt with text and EARS patterns
+alt answer within 30 s
+  LLM --> GW : candidate EARS sentence
+  GW --> NC : normalizedText
+  NC -> VC : validate as EARS(normalizedText)
+  alt candidate invalid
+    VC --> NC : ValidationError
+    NC -> FT : status = INVALID ("normalization failed")
+  else candidate valid
+    NC -> CLI : ask acceptance(original, normalized)
+    CLI -> TE : "Accept normalized text? (y/n)"
+    TE --> CLI : answer
+    CLI --> NC : answer
+    alt accepted
+      create "normalized:EarsRequirement" as ER <<entity>>
+      NC -> ER : create(normalizedText, tag @llm-normalized)
+      NC -> FT : status = NORMALIZED
+    else rejected
+      NC -> FT : status = INVALID ("normalization rejected")
+    end
+  end
+else timeout or service error
+  GW --> NC : failure
+  NC -> FT : status = INVALID ("LLM service unavailable")
+end
+NC --> VC : result (NORMALIZED or INVALID)
+@enduml

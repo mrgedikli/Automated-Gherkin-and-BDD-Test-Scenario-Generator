@@ -1,0 +1,12 @@
+@startsalt
+scale 2.5
+{+
+<b>File already exists
+==
+features/user_login.feature already exists.        
+Do you want to overwrite it?
+.
+==
+{ . | [No, skip] | [Yes, overwrite] }
+}
+@endsalt

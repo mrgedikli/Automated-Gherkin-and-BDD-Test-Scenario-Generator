@@ -1,0 +1,28 @@
+@startuml
+!include skin.iuml
+left to right direction
+actor "Test Engineer" as TE
+actor "LLM Service" as LLM <<system>>
+rectangle "Automated Gherkin & BDD Test Scenario Generator" {
+  usecase "UC-1\nLoad Requirements File" as UC1
+  usecase "UC-2\nSelect Input Format" as UC2
+  usecase "UC-3\nGenerate Scenarios" as UC3
+  usecase "UC-4\nValidate Requirements" as UC4
+  usecase "UC-5\nView Error Report" as UC5
+  usecase "UC-6\nPreview Scenarios" as UC6
+  usecase "UC-7\nExport Scenarios" as UC7
+  usecase "UC-8\nSelect Output Format" as UC8
+  usecase "UC-9\nNormalize Free-Text\nRequirement" as UC9
+}
+TE --> UC1
+TE --> UC2
+TE --> UC3
+TE --> UC5
+TE --> UC6
+TE --> UC7
+UC3 ..> UC4 : <<include>>
+UC5 ..> UC4 : <<extend>>\n[invalid requirement found]
+UC9 ..> UC4 : <<extend>>\n[free text and LLM enabled]
+UC7 ..> UC8 : <<include>>
+UC9 --> LLM
+@enduml

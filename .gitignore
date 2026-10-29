@@ -1,0 +1,33 @@
+# Build output
+target/
+build/
+out/
+*.class
+*.jar
+!gradle/wrapper/gradle-wrapper.jar
+
+# IDEs
+.idea/
+*.iml
+.vscode/
+.classpath
+.project
+.settings/
+.metadata/
+bin/
+
+# Logs and reports
+*.log
+hs_err_pid*
+
+# Operating systems
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Office lock files
+~$*
+
+# Secrets (the LLM API key is read from an environment variable, NFR-27)
+.env
+*.env

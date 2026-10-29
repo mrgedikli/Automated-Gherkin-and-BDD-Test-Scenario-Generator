@@ -1,0 +1,3 @@
+Feature: Account security
+REQ-7: While the account is active, when the user enters a wrong password, the system shall display an error message.
+REQ-9: While the account is active, if the user enters a wrong password three times, then the system shall lock the account.

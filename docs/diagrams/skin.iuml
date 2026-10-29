@@ -1,0 +1,33 @@
+' Shared look for all CURATORES diagrams
+skinparam shadowing false
+skinparam dpi 150
+skinparam defaultFontName "DejaVu Sans"
+skinparam defaultFontSize 12
+skinparam backgroundColor #FFFFFF
+skinparam ArrowColor #24395C
+skinparam ArrowFontSize 11
+skinparam ClassBackgroundColor #FFFFFF
+skinparam ClassHeaderBackgroundColor #EEF3F9
+skinparam ClassBorderColor #24395C
+skinparam ClassBorderThickness 1.5
+skinparam StereotypeFontColor #4A5C7A
+skinparam PackageBorderColor #8A9BB5
+skinparam PackageBackgroundColor #FAFBFD
+skinparam ActorBorderColor #24395C
+skinparam ActorBackgroundColor #EEF3F9
+skinparam UsecaseBackgroundColor #EEF3F9
+skinparam UsecaseBorderColor #24395C
+skinparam RectangleBorderColor #24395C
+skinparam ParticipantBackgroundColor #EEF3F9
+skinparam ParticipantBorderColor #24395C
+skinparam SequenceLifeLineBorderColor #8A9BB5
+skinparam SequenceGroupBorderColor #8A9BB5
+skinparam SequenceGroupHeaderFontColor #24395C
+skinparam NoteBackgroundColor #FFF8E1
+skinparam NoteBorderColor #C9A227
+skinparam ActivityBackgroundColor #EEF3F9
+skinparam ActivityBorderColor #24395C
+skinparam ActivityDiamondBackgroundColor #FFFFFF
+skinparam ActivityDiamondBorderColor #24395C
+skinparam StateBackgroundColor #EEF3F9
+skinparam StateBorderColor #24395C

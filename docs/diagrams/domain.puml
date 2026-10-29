@@ -1,0 +1,104 @@
+@startuml
+!include skin.iuml
+hide circle
+hide methods
+hide empty members
+skinparam linetype polyline
+skinparam nodesep 60
+skinparam ranksep 55
+
+class GenerationSession {
+  inputFormat : InputFormat [0..1]
+  outputFormat : OutputFormat
+  llmNormalizationEnabled
+  negativeScenariosEnabled
+  boundaryScenariosEnabled
+  startedAt
+}
+class RequirementsFile {
+  path
+  encoding
+}
+abstract class Requirement {
+  requirementId
+  text
+  lineNumber
+  featureName [0..1]
+  status : RequirementStatus
+}
+class EarsRequirement {
+  pattern : EarsPattern [1..*]
+}
+class Clause {
+  kind : ClauseKind
+  text
+}
+class UserStory {
+  role
+  goal
+  benefit [0..1]
+}
+class AcceptanceCriterion {
+  stepTexts [1..*]
+}
+class FreeTextRequirement {
+  normalizedText [0..1]
+  accepted [0..1]
+}
+class ValidationError {
+  reason
+  expectedPattern
+  hint
+  severity : Severity
+}
+class ErrorReport {
+  createdAt
+  savedPath [0..1]
+}
+class Feature {
+  title
+  description
+}
+class Background
+class Scenario {
+  title
+  tags [1..*]
+  kind : ScenarioKind
+}
+class ScenarioOutline
+class ExamplesTable {
+  header
+  rows [1..*]
+}
+class Step {
+  keyword : StepKeyword
+  text
+  order
+}
+class OutputFile {
+  path
+  format : OutputFormat
+}
+
+GenerationSession "1" --> "1" RequirementsFile : processes >
+GenerationSession "1" --> "0..1" ErrorReport : produces >
+GenerationSession "1" --> "0..*" Feature : produces >
+RequirementsFile "1" *-- "1..*" Requirement : contains >
+Requirement <|-- EarsRequirement
+Requirement <|-- UserStory
+Requirement <|-- FreeTextRequirement
+EarsRequirement "1" *-- "1..*" Clause : {ordered}
+UserStory "1" *-- "0..*" AcceptanceCriterion
+FreeTextRequirement "1" --> "0..1" EarsRequirement : normalized into >
+ValidationError "0..*" -left- "1" Requirement : < has
+ErrorReport "1" o-- "1..*" ValidationError : lists >
+Feature "1" *-- "0..1" Background
+Feature "1" *-- "1..*" Scenario
+Background "1" *-- "1..*" Step
+Scenario "1" *-- "1..*" Step : {ordered}
+Scenario <|-- ScenarioOutline
+ScenarioOutline "1" *-- "1" ExamplesTable
+Scenario "0..*" --> "1" Requirement : derived from >
+Step "0..*" --> "0..1" Clause : derived from >
+OutputFile "0..*" --> "1" Feature : stores >
+@enduml

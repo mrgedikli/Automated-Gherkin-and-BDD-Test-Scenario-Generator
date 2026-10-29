@@ -1,0 +1,16 @@
+@startsalt
+scale 2.5
+{+
+<b>Normalize free-text requirement (1 of 2)
+==
+Line L1 - original text:
+{+ "Users should get an email after they reset their password"      }
+.
+Normalized by LLM Service (valid EARS):
+{+ "When the user resets the password, the system shall send a confirmation email."      }
+.
+Scenarios of an accepted requirement are tagged @llm-normalized.
+==
+{ . | . | [Reject] | [Accept] }
+}
+@endsalt

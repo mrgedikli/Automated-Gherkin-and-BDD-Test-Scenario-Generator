@@ -1,0 +1,34 @@
+@startsalt
+skinparam dpi 200
+{+
+  {* File | Generate | Help }
+  {
+    Requirements file: | "login.txt                 " | [Browse...]
+    Input format:      | ^Auto-detect^ 
+    Output format:     | ^Gherkin (.feature)^
+    Output folder:     | "features/                 " | [Browse...]
+  }
+  {
+    [X] Negative scenarios | [X] Boundary scenarios | [ ] LLM normalization of free text
+  }
+  ==
+  {/ <b>Preview | Error report (0) | Summary }
+  {SI
+    Feature: User login
+    .
+    <i>@REQ-3 @positive
+    Scenario: The user enters a wrong password
+        Given the user is on the login page
+        When the user enters a wrong password
+        Then the system displays an error message
+    .
+    <i>@REQ-3 @negative
+    Scenario: The user enters a wrong password - negative
+        Given the user is on the login page
+        When the condition "the user enters a wrong password" is not met
+        Then the system does not display an error message
+  }
+  ==
+  { 6 read  -  6 valid  -  0 invalid  -  0 normalized  -  12 scenarios | . | . | [Generate] | [Export] }
+}
+@endsalt

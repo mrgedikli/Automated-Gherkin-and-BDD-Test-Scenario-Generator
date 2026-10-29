@@ -1,0 +1,59 @@
+@startuml
+!include skin.iuml
+hide circle
+hide methods
+hide empty members
+enum InputFormat <<enumeration>> {
+  EARS
+  USER_STORY
+  FREE_TEXT
+}
+enum OutputFormat <<enumeration>> {
+  GHERKIN
+  MARKDOWN
+  JSON
+}
+enum EarsPattern <<enumeration>> {
+  UBIQUITOUS
+  EVENT_DRIVEN
+  STATE_DRIVEN
+  UNWANTED_BEHAVIOUR
+  OPTIONAL_FEATURE
+}
+enum ClauseKind <<enumeration>> {
+  WHILE
+  WHERE
+  WHEN
+  IF
+  SHALL
+}
+enum RequirementStatus <<enumeration>> {
+  LOADED
+  NORMALIZED
+  VALID
+  INVALID
+  TRANSLATED
+}
+enum StepKeyword <<enumeration>> {
+  GIVEN
+  WHEN
+  THEN
+  AND
+}
+enum ScenarioKind <<enumeration>> {
+  POSITIVE
+  NEGATIVE
+  BOUNDARY
+}
+enum Severity <<enumeration>> {
+  ERROR
+  WARNING
+}
+InputFormat -[hidden]> OutputFormat
+OutputFormat -[hidden]> EarsPattern
+EarsPattern -[hidden]> ClauseKind
+InputFormat -[hidden]-> RequirementStatus
+RequirementStatus -[hidden]> StepKeyword
+StepKeyword -[hidden]> ScenarioKind
+ScenarioKind -[hidden]> Severity
+@enduml

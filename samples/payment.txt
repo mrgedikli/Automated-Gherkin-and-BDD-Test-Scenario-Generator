@@ -1,0 +1,10 @@
+REQ-1: When the user opens the checkout page, the system shall display the total price of the cart.
+REQ-2: When the user selects a saved card, the system shall fill in the card details.
+REQ-3: If the card is expired, then the system shall reject the payment.
+REQ-4: When the user clicks Pay, the payment is processed.
+REQ-5: While a payment is being processed, the system shall disable the Pay button.
+REQ-6: When the payment succeeds, the system shall display the order number.
+REQ-7: If the bank declines the payment, then the system shall display the reason given by the bank.
+REQ-8: Where invoices are enabled, when the payment succeeds, the system shall send an invoice by email.
+REQ-2: When the user enters a discount code, the system shall update the total price.
+REQ-10: The system shall mask all but the last four digits of the card number.

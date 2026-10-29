@@ -1,0 +1,50 @@
+@startuml
+!include skin.iuml
+skinparam PartitionBorderColor #8A9BB5
+skinparam PartitionBorderThickness 1.5
+start
+:Load requirements file;
+if (File readable?) then (no)
+  :Show file error;
+  stop
+endif
+if (Input format selected?) then (yes)
+  :Use selected format;
+else (no)
+  :Detect format from leading keywords;
+endif
+partition "Validate requirements (UC-4)" {
+  :Check each requirement against its input format;
+  if (Free-text requirements exist?) then (yes)
+    if (LLM normalization enabled?) then (yes)
+      :Normalize free text to EARS (UC-9);
+    else (no)
+      :Mark free text invalid;
+    endif
+  endif
+}
+if (Any invalid requirement?) then (yes)
+  :Record errors in Error Report;
+endif
+if (Any valid requirement?) then (no)
+  :Show Error Report;
+  stop
+endif
+:Map clauses to Given / When / Then steps;
+fork
+  :Build positive scenarios;
+fork again
+  :Build negative scenarios\n(if enabled);
+fork again
+  :Build boundary Scenario Outlines\n(if enabled);
+end fork
+:Group scenarios into features;
+:Extract shared Given steps into Background;
+:Show preview and summary;
+if (Preview only?) then (no)
+  :Determine output format;
+  :Write one file per feature;
+  :Show list of written files;
+endif
+stop
+@enduml

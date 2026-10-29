@@ -1,0 +1,18 @@
+@startsalt
+scale 2.5
+{+
+<b>Export completed
+==
+Output format: Gherkin (.feature)        
+Output folder: features/
+.
+Written files:
+{+
+ features/user_login.feature            
+}
+.
+Skipped: 0 - Failed: 0
+==
+{ . | . | [Close] }
+}
+@endsalt

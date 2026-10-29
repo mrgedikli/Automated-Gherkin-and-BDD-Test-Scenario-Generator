@@ -1,0 +1,15 @@
+As a customer, I want to add items to the cart, so that I can buy several products in one order.
+Given the product is in stock
+When the customer adds the product to the cart
+Then the cart shows the product
+Given the product is out of stock
+When the customer adds the product to the cart
+Then the system displays the message "Out of stock"
+As a customer, I want to remove items from the cart, so that I only pay for what I need.
+Given the cart contains two products
+When the customer removes one product
+Then the cart shows one product
+Given the cart contains one product
+When the customer removes the product
+Then the cart is empty
+As a customer, I want to apply a discount code, so that I pay a lower price.

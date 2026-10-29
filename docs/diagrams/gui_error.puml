@@ -1,0 +1,17 @@
+@startsalt
+scale 2.5
+{+
+{* File | Generate | Help }
+{ Requirements file: | "payment.txt          " | [Browse...] }
+==
+{/ Preview | <b>Error report (2) | Summary }
+{#
+ <b>Line | <b>ID | <b>Reason | <b>Expected pattern / hint
+ 4 | REQ-4 | missing response clause | When <trigger>, the <system> shall <response>.
+ . | . | . | hint: write "the system shall process the payment"     
+ 9 | REQ-2 | duplicate requirement ID | first used on line 2
+}
+==
+{ 10 read - 8 valid - 2 invalid - 0 normalized - 8 scenarios | [Save report...] | [Generate] | [Export] }
+}
+@endsalt

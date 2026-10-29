@@ -1,0 +1,14 @@
+@startuml
+!include skin.iuml
+hide empty description
+[*] --> Loaded : line read from file
+Loaded --> Normalized : free text accepted\nafter LLM rewrite
+Loaded --> Valid : validation passed
+Loaded --> Invalid : validation failed /\nnormalization failed or rejected
+Normalized --> Valid : validation passed
+Normalized --> Invalid : validation failed
+Valid --> Translated : scenarios generated
+Invalid --> [*] : session ends
+Translated --> [*] : session ends
+note right of Invalid : listed in the Error Report\n(corrected in the file and\nloaded again in a new session)
+@enduml

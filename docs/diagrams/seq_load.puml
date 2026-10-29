@@ -1,0 +1,36 @@
+@startuml
+!include skin.iuml
+autonumber
+hide footbox
+actor "Test Engineer" as TE
+participant ":CommandLineInterface" as CLI <<boundary>>
+participant ":GenerationControl" as GC <<control>>
+participant ":RequirementsFile" as RF <<entity>>
+participant ":Requirement" as R <<entity>>
+TE -> CLI : generate(file, [inputFormat])
+CLI -> GC : load requirements file
+GC -> RF : open(path)
+alt file missing or unreadable
+  RF --> GC : read error
+  GC --> CLI : error naming the file
+  CLI --> TE : "Cannot read login.txt"
+else file readable
+  loop for each non-empty, non-comment line
+    alt line starts with "Feature:"
+      GC -> GC : remember feature name
+    else line is an acceptance-criterion step
+      GC -> R : add AcceptanceCriterion to previous UserStory
+    else requirement line
+      create R
+      GC -> R : create(id or "L<line>", text, lineNumber, featureName)
+      alt input format given
+        GC -> R : set format = selected format
+      else no input format
+        GC -> R : set format from leading keyword
+      end
+    end
+  end
+  GC --> CLI : number of requirements read
+  CLI --> TE : "Reading login.txt ... 6 requirements"
+end
+@enduml

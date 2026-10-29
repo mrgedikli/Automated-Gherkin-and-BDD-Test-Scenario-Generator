@@ -1,0 +1,21 @@
+@startuml
+!include skin.iuml
+hide empty description
+state "Main Window" as Main : choose file, formats and options
+state "Preview Tab" as Prev : Features, Background and Scenarios
+state "Error Report Tab" as Err : one row per invalid requirement
+state "Normalization Dialog" as Norm : original vs. normalized text\naccept / reject
+state "Overwrite Dialog" as Ovr : overwrite existing file? yes / no
+state "Export Result Dialog" as Res : list of written files
+[*] --> Main
+Main --> Norm : Generate [free text, LLM on]
+Norm --> Norm : next free-text requirement
+Norm --> Prev : all answered
+Main --> Prev : Generate
+Prev --> Err : open tab [invalid > 0]
+Err --> Prev : open tab
+Prev --> Ovr : Export [file exists]
+Ovr --> Res : answered
+Prev --> Res : Export
+Res --> Main : Close
+@enduml

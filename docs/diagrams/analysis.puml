@@ -1,0 +1,48 @@
+@startuml
+!include skin.iuml
+hide circle
+hide methods
+hide members
+
+skinparam linetype ortho
+package "Boundary objects" {
+  class CommandLineInterface <<boundary>>
+  class GraphicalInterface <<boundary>>
+  class PreviewView <<boundary>>
+  class ErrorReportView <<boundary>>
+  class LlmServiceGateway <<boundary>>
+}
+package "Control objects" {
+  class GenerationControl <<control>>
+  class ValidationControl <<control>>
+  class NormalizationControl <<control>>
+  class ExportControl <<control>>
+}
+package "Entity objects" {
+  class RequirementsFile <<entity>>
+  class Requirement <<entity>>
+  class ErrorReport <<entity>>
+  class Feature <<entity>>
+  class Scenario <<entity>>
+  class OutputFile <<entity>>
+}
+CommandLineInterface --> GenerationControl
+GraphicalInterface --> GenerationControl
+CommandLineInterface --> ExportControl
+GraphicalInterface --> ExportControl
+GenerationControl --> RequirementsFile
+GenerationControl --> ValidationControl
+GenerationControl --> NormalizationControl
+GenerationControl --> Feature
+GenerationControl --> PreviewView
+NormalizationControl --> LlmServiceGateway
+
+NormalizationControl --> Requirement
+ValidationControl --> Requirement
+ValidationControl --> ErrorReport
+ErrorReportView --> ErrorReport
+PreviewView --> Feature
+Feature --> Scenario
+ExportControl --> Feature
+ExportControl --> OutputFile
+@enduml

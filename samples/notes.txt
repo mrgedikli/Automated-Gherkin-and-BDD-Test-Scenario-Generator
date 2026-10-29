@@ -1,0 +1,2 @@
+Users should get an email after they reset their password
+Make the app fast

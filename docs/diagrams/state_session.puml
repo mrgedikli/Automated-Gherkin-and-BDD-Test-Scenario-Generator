@@ -1,0 +1,23 @@
+@startuml
+!include skin.iuml
+hide empty description
+[*] --> Loading : generate command
+Loading --> Failed : file unreadable
+Loading --> Validating : requirements read
+state Validating {
+  [*] --> CheckingRequirements
+  CheckingRequirements --> Normalizing : free text found\n[LLM enabled]
+  Normalizing --> CheckingRequirements : normalization finished
+  CheckingRequirements --> [*] : all checked
+}
+Validating --> Failed : no valid requirement
+Validating --> Generating : at least one valid requirement
+Generating --> Previewing : features built
+Previewing --> Finished : [preview only]
+Previewing --> Exporting : export confirmed
+Exporting --> WaitingForConfirmation : file already exists
+WaitingForConfirmation --> Exporting : answer given
+Exporting --> Finished : all files processed
+Finished --> [*]
+Failed --> [*]
+@enduml

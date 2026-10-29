@@ -1,0 +1,52 @@
+@startuml
+!include skin.iuml
+autonumber
+hide footbox
+actor "Test Engineer" as TE
+participant ":CommandLineInterface" as CLI <<boundary>>
+participant ":GenerationControl" as GC <<control>>
+participant ":ValidationControl" as VC <<control>>
+participant ":Requirement" as R <<entity>>
+participant ":ErrorReport" as ER <<entity>>
+participant ":Feature" as F <<entity>>
+participant ":PreviewView" as PV <<boundary>>
+participant ":ErrorReportView" as EV <<boundary>>
+TE -> CLI : start generation(options)
+CLI -> GC : generate
+GC -> VC : validate(requirements)
+loop for each requirement
+  VC -> R : check against format and patterns
+  alt requirement invalid
+    VC -> R : status = INVALID
+    VC -> ER : add ValidationError(reason, expectedPattern, hint)
+  else requirement valid
+    VC -> R : status = VALID
+  end
+end
+VC --> GC : valid requirements
+alt no valid requirement
+  GC -> EV : show(error report)
+  EV --> TE : error report, nothing generated
+else at least one valid requirement
+  loop for each valid requirement
+    GC -> F : add positive Scenario (Given/When/Then from clauses)
+    opt negative scenarios enabled and trigger or condition exists
+      GC -> F : add negative Scenario
+    end
+    opt boundary scenarios enabled and numeric limit exists
+      GC -> F : add Scenario Outline with Examples
+    end
+    GC -> R : status = TRANSLATED
+  end
+  loop for each Feature
+    opt all Scenarios share the same leading Given steps
+      GC -> F : move shared steps into Background
+    end
+  end
+  GC -> PV : show(features, summary)
+  PV --> TE : preview + summary
+  opt ErrorReport not empty
+    PV --> TE : warning with invalid requirement count
+  end
+end
+@enduml

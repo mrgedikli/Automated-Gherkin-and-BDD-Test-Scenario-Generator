@@ -1,0 +1,7 @@
+Feature: User login
+REQ-1: When the user submits a valid username and password, the system shall display the dashboard.
+REQ-2: When the user clicks "Forgot password", the system shall display the password reset page.
+REQ-3: While the user is on the login page, when the user enters a wrong password, the system shall display an error message.
+REQ-4: If the username field is empty, then the system shall display the message "Username is required".
+REQ-5: Where the option "Remember me" is enabled, when the user logs in, the system shall keep the user signed in after the browser is closed.
+REQ-6: When the user clicks "Log out", the system shall display the login page.
