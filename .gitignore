@@ -31,3 +31,6 @@ desktop.ini
 # Secrets (the LLM API key is read from an environment variable, NFR-27)
 .env
 *.env
+
+# Personal AI assistant outputs (not part of the project)
+Claude outputs/
