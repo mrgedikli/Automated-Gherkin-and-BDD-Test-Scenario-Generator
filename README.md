@@ -30,7 +30,7 @@ CSE 443 Object-Oriented Analysis and Design term project, Gebze Technical Univer
 
 | # | Deliverable | Location | Status |
 | --- | --- | --- | --- |
-| 1 | Requirements Analysis Document (RAD) | [`docs/deliverable1-rad/`](docs/deliverable1-rad/) | Submitted 30 Oct 2026 (tag `v0.1-rad`) |
+| 1 | Requirements Analysis Document (RAD) | [`docs/deliverable1-rad/`](docs/deliverable1-rad/) | Submitted 30 Oct 2026 (tag `v0.1-rad`); Issue 1.1 revised after the instructor's review, 18 Nov 2026 |
 | 2 | System Design Document (SDD) | `docs/` | Planned |
 | 3 | Software Test Document (STD) | `docs/` | Planned |
 | 4 | Implementation and presentation | `src/`, `docs/` | Planned |

@@ -2,7 +2,6 @@
 !include skin.iuml
 hide circle
 hide methods
-hide empty members
 enum InputFormat <<enumeration>> {
   EARS
   USER_STORY
@@ -49,11 +48,14 @@ enum Severity <<enumeration>> {
   ERROR
   WARNING
 }
-InputFormat -[hidden]> OutputFormat
-OutputFormat -[hidden]> EarsPattern
-EarsPattern -[hidden]> ClauseKind
-InputFormat -[hidden]-> RequirementStatus
-RequirementStatus -[hidden]> StepKeyword
-StepKeyword -[hidden]> ScenarioKind
-ScenarioKind -[hidden]> Severity
+enum SessionState <<enumeration>> {
+  LOADING
+  VALIDATING
+  GENERATING
+  PREVIEWING
+  EXPORTING
+  WAITING_FOR_CONFIRMATION
+  FINISHED
+  FAILED
+}
 @enduml

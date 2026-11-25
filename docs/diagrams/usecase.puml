@@ -14,15 +14,15 @@ rectangle "Automated Gherkin & BDD Test Scenario Generator" {
   usecase "UC-8\nSelect Output Format" as UC8
   usecase "UC-9\nNormalize Free-Text\nRequirement" as UC9
 }
-TE --> UC1
-TE --> UC2
-TE --> UC3
-TE --> UC5
-TE --> UC6
-TE --> UC7
+TE -- UC1
+TE -- UC2
+TE -- UC3
+TE -- UC6
+TE -- UC7
+TE -- UC9
+UC9 -- LLM
 UC3 ..> UC4 : <<include>>
+UC9 ..> UC4 : <<include>>
 UC5 ..> UC4 : <<extend>>\n[invalid requirement found]
-UC9 ..> UC4 : <<extend>>\n[free text and LLM enabled]
 UC7 ..> UC8 : <<include>>
-UC9 --> LLM
 @enduml

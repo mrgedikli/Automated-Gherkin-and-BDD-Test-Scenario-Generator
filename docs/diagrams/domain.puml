@@ -2,19 +2,8 @@
 !include skin.iuml
 hide circle
 hide methods
-hide empty members
-skinparam linetype polyline
-skinparam nodesep 60
-skinparam ranksep 55
-
-class GenerationSession {
-  inputFormat : InputFormat [0..1]
-  outputFormat : OutputFormat
-  llmNormalizationEnabled
-  negativeScenariosEnabled
-  boundaryScenariosEnabled
-  startedAt
-}
+skinparam nodesep 40
+skinparam ranksep 50
 class RequirementsFile {
   path
   encoding
@@ -29,10 +18,6 @@ abstract class Requirement {
 class EarsRequirement {
   pattern : EarsPattern [1..*]
 }
-class Clause {
-  kind : ClauseKind
-  text
-}
 class UserStory {
   role
   goal
@@ -45,6 +30,10 @@ class FreeTextRequirement {
   normalizedText [0..1]
   accepted [0..1]
 }
+class Clause {
+  kind : ClauseKind
+  text
+}
 class ValidationError {
   reason
   expectedPattern
@@ -54,6 +43,15 @@ class ValidationError {
 class ErrorReport {
   createdAt
   savedPath [0..1]
+}
+class GenerationSession {
+  inputFormat : InputFormat [0..1]
+  outputFormat : OutputFormat
+  llmNormalizationEnabled
+  negativeScenariosEnabled
+  boundaryScenariosEnabled
+  startedAt
+  state : SessionState
 }
 class Feature {
   title
@@ -79,26 +77,25 @@ class OutputFile {
   path
   format : OutputFormat
 }
-
-GenerationSession "1" --> "1" RequirementsFile : processes >
-GenerationSession "1" --> "0..1" ErrorReport : produces >
-GenerationSession "1" --> "0..*" Feature : produces >
-RequirementsFile "1" *-- "1..*" Requirement : contains >
+RequirementsFile "1" *-- "1..*" Requirement : contains
 Requirement <|-- EarsRequirement
 Requirement <|-- UserStory
 Requirement <|-- FreeTextRequirement
-EarsRequirement "1" *-- "1..*" Clause : {ordered}
 UserStory "1" *-- "0..*" AcceptanceCriterion
-FreeTextRequirement "1" --> "0..1" EarsRequirement : normalized into >
-ValidationError "0..*" -left- "1" Requirement : < has
-ErrorReport "1" o-- "1..*" ValidationError : lists >
-Feature "1" *-- "0..1" Background
+EarsRequirement "1" *-- "1..*" Clause : {ordered}
+FreeTextRequirement "1" -- "0..1" EarsRequirement : normalized into
+Requirement "1" -- "0..*" ValidationError : has
+ErrorReport "1" o-- "1..*" ValidationError : lists
+GenerationSession "1" -- "1" RequirementsFile : processes
+GenerationSession "1" -- "0..1" ErrorReport : produces
+GenerationSession "1" -- "0..*" Feature : produces
 Feature "1" *-- "1..*" Scenario
-Background "1" *-- "1..*" Step
-Scenario "1" *-- "1..*" Step : {ordered}
+Feature "1" *-- "0..1" Background
 Scenario <|-- ScenarioOutline
 ScenarioOutline "1" *-- "1" ExamplesTable
-Scenario "0..*" --> "1" Requirement : derived from >
-Step "0..*" --> "0..1" Clause : derived from >
-OutputFile "0..*" --> "1" Feature : stores >
+Scenario "1" *-- "1..*" Step : {ordered}
+Background "1" *-- "1..*" Step
+Scenario "0..*" -- "1" Requirement : derived from
+Step "0..*" -- "0..1" Clause : derived from
+OutputFile "0..*" -- "1" Feature : stores
 @enduml

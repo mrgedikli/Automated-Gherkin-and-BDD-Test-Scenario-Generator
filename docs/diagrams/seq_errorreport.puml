@@ -1,0 +1,29 @@
+@startuml
+!include skin.iuml
+autonumber
+hide footbox
+actor "Test Engineer" as TE
+participant ":CommandLineInterface" as CLI <<boundary>>
+participant ":ValidationControl" as VC <<control>>
+participant ":ErrorReport" as ER <<entity>>
+participant ":ErrorReportView" as ERV <<boundary>>
+participant ":ValidationError" as VE <<entity>>
+TE -> CLI : generate(file, [report file])
+CLI -> VC : validate requirements
+VC -> VE : create(reason, expected pattern, hint)
+VC -> ER : create(validation errors)
+note right of VC : UC-4 finds at least one\ninvalid requirement
+VC -> ERV : display(error report)
+ERV -> ER : get entries
+loop for each ValidationError
+  ER -> VE : get line, id, text, reason, expected pattern, hint
+  VE --> ER : entry
+end
+ER --> ERV : entries ordered by line number
+ERV --> TE : error report table
+opt report file path given
+  ERV -> ER : save(path)
+  ER --> ERV : saved
+  ERV --> TE : "Report saved to report.txt"
+end
+@enduml
