@@ -11,7 +11,7 @@ PlantUML sources of every figure in the Requirements Analysis Document. Each `.p
 | 5 | `seq_load.puml` | Sequence diagram: Load Requirements File (UC-1, UC-2) |
 | 6 | `seq_generate.puml` | Sequence diagram: Generate Scenarios (UC-3, UC-4) |
 | 7 | `seq_normalize.puml` | Sequence diagram: Normalize Free-Text Requirement (UC-9) |
-| 8 | `seq_report.puml` | Sequence diagram: View Error Report (UC-5) |
+| 8 | `seq_errorreport.puml` | Sequence diagram: View Error Report (UC-5) |
 | 9 | `seq_export.puml` | Sequence diagram: Export Scenarios (UC-7, UC-8) |
 | 10 | `activity.puml` | Activity diagram: generation session |
 | 11 | `state_requirement.puml` | State machine: Requirement |

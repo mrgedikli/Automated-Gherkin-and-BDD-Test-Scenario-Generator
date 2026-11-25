@@ -3,46 +3,45 @@
 hide circle
 hide methods
 hide members
-
-skinparam linetype ortho
 package "Boundary objects" {
-  class CommandLineInterface <<boundary>>
   class GraphicalInterface <<boundary>>
+  class CommandLineInterface <<boundary>>
+  class LlmServiceGateway <<boundary>>
   class PreviewView <<boundary>>
   class ErrorReportView <<boundary>>
-  class LlmServiceGateway <<boundary>>
 }
 package "Control objects" {
   class GenerationControl <<control>>
+  class ExportControl <<control>>
   class ValidationControl <<control>>
   class NormalizationControl <<control>>
-  class ExportControl <<control>>
 }
 package "Entity objects" {
+  class OutputFile <<entity>>
   class RequirementsFile <<entity>>
+  class Feature <<entity>>
   class Requirement <<entity>>
   class ErrorReport <<entity>>
-  class Feature <<entity>>
   class Scenario <<entity>>
-  class OutputFile <<entity>>
 }
-CommandLineInterface --> GenerationControl
 GraphicalInterface --> GenerationControl
-CommandLineInterface --> ExportControl
 GraphicalInterface --> ExportControl
-GenerationControl --> RequirementsFile
+CommandLineInterface --> GenerationControl
+CommandLineInterface --> ExportControl
 GenerationControl --> ValidationControl
 GenerationControl --> NormalizationControl
+GenerationControl --> RequirementsFile
 GenerationControl --> Feature
 GenerationControl --> PreviewView
+NormalizationControl --> ValidationControl
 NormalizationControl --> LlmServiceGateway
-
 NormalizationControl --> Requirement
 ValidationControl --> Requirement
 ValidationControl --> ErrorReport
+ValidationControl --> ErrorReportView
 ErrorReportView --> ErrorReport
 PreviewView --> Feature
-Feature --> Scenario
 ExportControl --> Feature
 ExportControl --> OutputFile
+Feature --> Scenario
 @enduml
